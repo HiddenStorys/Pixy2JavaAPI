@@ -121,7 +121,7 @@ public class Pixy2 {
 	public int init(int argument) {
 		int ret = link.open(argument);
 		if (ret >= 0) {
-			for (long t = System.currentTimeMillis(); System.currentTimeMillis() - t < 5000;) {
+			for (long t = System.currentTimeMillis(); System.currentTimeMillis() - t < 1000;) {
 				if (getVersion() >= 0) {
 					getResolution();
 					return PIXY_RESULT_OK;
@@ -403,7 +403,7 @@ public class Pixy2 {
 
 			type = buffer[0] & 0xff;
 			length = buffer[1] & 0xff;
-
+			
 			csSerial = ((buffer[3] & 0xff) << 8) | (buffer[2] & 0xff);
 
 			res = link.receive(buffer, length, csCalc);
@@ -417,8 +417,8 @@ public class Pixy2 {
 			if (res < 0)
 				return res;
 
-			type = buffer[0];
-			length = buffer[1];
+			type = buffer[0] & 0xff;
+			length = buffer[1] & 0xff;
 
 			res = link.receive(buffer, length);
 
